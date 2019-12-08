@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Battery from './battery';
+import FlightData from './flightdata';
 import socket from '../socket';
 import styled from 'styled-components';
 
@@ -37,6 +38,7 @@ const DroneState = () => {
     <DroneStateStyles>
       <p className="status">Status: {status}</p>
       <Battery battery={droneState.bat} />
+      <FlightData speed={droneState.yaw}/>
     </DroneStateStyles>
   );
 };

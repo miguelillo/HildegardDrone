@@ -105,12 +105,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _battery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./battery */ "./components/battery.js");
-/* harmony import */ var _socket__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../socket */ "./socket.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
-var _jsxFileName = "D:\\VSONLINE\\Drone_Hildegard-master\\HildegardDrone\\frontend\\components\\DroneState.js";
+/* harmony import */ var _flightdata__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./flightdata */ "./components/flightdata.js");
+/* harmony import */ var _socket__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../socket */ "./socket.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
+var _jsxFileName = "F:\\VSONLINE\\Drone\\frontend\\components\\DroneState.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -122,8 +124,8 @@ function useDroneState() {
     1: updateDroneState
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    _socket__WEBPACK_IMPORTED_MODULE_2__["default"].on('dronestate', updateDroneState);
-    return () => _socket__WEBPACK_IMPORTED_MODULE_2__["default"].removeListener('dronestate');
+    _socket__WEBPACK_IMPORTED_MODULE_3__["default"].on('dronestate', updateDroneState);
+    return () => _socket__WEBPACK_IMPORTED_MODULE_3__["default"].removeListener('dronestate');
   }, []);
   return droneState;
 }
@@ -134,13 +136,13 @@ function useSocket() {
     1: updateStatus
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('DISCONNECTED');
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    _socket__WEBPACK_IMPORTED_MODULE_2__["default"].on('status', updateStatus);
-    return () => _socket__WEBPACK_IMPORTED_MODULE_2__["default"].removeListener('status');
+    _socket__WEBPACK_IMPORTED_MODULE_3__["default"].on('status', updateStatus);
+    return () => _socket__WEBPACK_IMPORTED_MODULE_3__["default"].removeListener('status');
   }, []);
   return status;
 }
 
-const DroneStateStyles = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+const DroneStateStyles = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
   displayName: "DroneState__DroneStateStyles",
   componentId: "knanam-0"
 })(["display:grid;grid-template-columns:1fr 4fr;grid-gap:5px;.status{grid-column:1 / -1;text-align:center;}"]);
@@ -151,21 +153,28 @@ const DroneState = () => {
   return __jsx(DroneStateStyles, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 37
+      lineNumber: 38
     },
     __self: undefined
   }, __jsx("p", {
     className: "status",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 38
+      lineNumber: 39
     },
     __self: undefined
   }, "Status: ", status), __jsx(_battery__WEBPACK_IMPORTED_MODULE_1__["default"], {
     battery: droneState.bat,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 39
+      lineNumber: 40
+    },
+    __self: undefined
+  }), __jsx(_flightdata__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    speed: droneState.yaw,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 41
     },
     __self: undefined
   }));
@@ -188,7 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
-var _jsxFileName = "D:\\VSONLINE\\Drone_Hildegard-master\\HildegardDrone\\frontend\\components\\battery.js";
+var _jsxFileName = "F:\\VSONLINE\\Drone\\frontend\\components\\battery.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -235,7 +244,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _socket__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../socket */ "./socket.js");
-var _jsxFileName = "D:\\VSONLINE\\Drone_Hildegard-master\\HildegardDrone\\frontend\\components\\commands.js";
+var _jsxFileName = "F:\\VSONLINE\\Drone\\frontend\\components\\commands.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -461,6 +470,51 @@ const Commands = () => __jsx(CommandGrid, {
 
 /***/ }),
 
+/***/ "./components/flightdata.js":
+/*!**********************************!*\
+  !*** ./components/flightdata.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+var _jsxFileName = "F:\\VSONLINE\\Drone\\frontend\\components\\flightdata.js";
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+const SpeedStyles = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
+  displayName: "flightdata__SpeedStyles",
+  componentId: "sc-178rp3v-0"
+})(["width:100%;"]);
+
+const FlightData = props => __jsx(SpeedStyles, {
+  speed: props.speed,
+  __source: {
+    fileName: _jsxFileName,
+    lineNumber: 7
+  },
+  __self: undefined
+}, __jsx("span", {
+  className: "flightData",
+  __source: {
+    fileName: _jsxFileName,
+    lineNumber: 8
+  },
+  __self: undefined
+}, props.speed));
+
+FlightData.defaultProps = {
+  speed: 60
+};
+/* harmony default export */ __webpack_exports__["default"] = (FlightData);
+
+/***/ }),
+
 /***/ "./pages/index.js":
 /*!************************!*\
   !*** ./pages/index.js ***!
@@ -476,7 +530,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_commands__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/commands */ "./components/commands.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
-var _jsxFileName = "D:\\VSONLINE\\Drone_Hildegard-master\\HildegardDrone\\frontend\\pages\\index.js";
+var _jsxFileName = "F:\\VSONLINE\\Drone\\frontend\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -541,7 +595,7 @@ const socket = socket_io_client__WEBPACK_IMPORTED_MODULE_0___default()('http://l
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\VSONLINE\Drone_Hildegard-master\HildegardDrone\frontend\pages\index.js */"./pages/index.js");
+module.exports = __webpack_require__(/*! F:\VSONLINE\Drone\frontend\pages\index.js */"./pages/index.js");
 
 
 /***/ }),

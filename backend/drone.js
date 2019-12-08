@@ -1,20 +1,24 @@
-import createSocket from 'dgram';
-import wait from 'waait';
+const dgram = require('dgram');
+const wait = require('waait');
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-import throttle from 'lodash/throttle';
-import delays from './commDelays';
+const throttle = require('lodash/throttle');
+const commandDelays = require('./commDelays');
 
 const PORT = 8889;
 const STATE_PORT = 8890;
+const STREAMING_PORT = 11111;
 const HOST = '192.168.10.1';
 
-const drone = createSocket('udp4');
+const drone = dgram.createSocket('udp4');
 drone.bind(PORT);
 
-const droneState = createSocket('udp4');
+const droneState = dgram.createSocket('udp4');
 droneState.bind(STATE_PORT);
+
+const droneStreaming = dgram.createSocket('udp4');
+droneStreaming.bind(STREAMING_PORT);
 
 drone.on('message', (message) => {
     console.log(`🤖 : ${message}`);
@@ -37,14 +41,11 @@ function handleError(err) {
     }
 }
 
-const commands = ['command', 'battery?', 'takeoff', 'land'];
-
 drone.send('command', 0, 'command'.length, PORT, HOST, handleError);
 
 io.on('connection', socket => {
     socket.on('command', command => {
         console.log('command Sent from browser');
-        console.log(command);
         drone.send(command, 0, command.length, PORT, HOST, handleError);
     });
     socket.emit('status', 'CONNECTED');
@@ -54,9 +55,18 @@ droneState.on(
     'message',
     throttle(state => {
         const formattedState = parseState(state.toString());
+        console.log(formattedState);
         io.sockets.emit('dronestate', formattedState);
     }, 100)
 );
+
+droneStreaming.on(
+    'stream', state => {
+        debugger;
+        drone.send('streamon', 0, command.length, PORT, HOST, handleError);
+        io.sockets.emit('droneStream', state);
+    }
+)
 
 http.listen(6767, () => {
     console.log('Socket io server up and running');

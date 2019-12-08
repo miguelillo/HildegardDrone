@@ -19,7 +19,7 @@ const BatteryStyles = styled.div`
     background: var(--color);
   }
 `;
-const Battery = props => ( 
+const Battery = props => (
   <BatteryStyles level={props.battery}>
     <span className="batteryLevel">{props.battery}%</span>
   </BatteryStyles>
