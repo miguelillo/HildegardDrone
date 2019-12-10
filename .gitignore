@@ -18,15 +18,6 @@ coverage
 
 # OSX
 .DS_Store
-
-# Visual Studio files
-.ntvs_analysis.dat
-.vs
-bin
-obj
-.block
-applicationhost.config
-
 # Resx Generated Code
 *.resx.ts
 
