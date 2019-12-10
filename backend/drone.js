@@ -24,6 +24,10 @@ drone.on('message', (message) => {
     console.log(`🤖 : ${message}`);
 });
 
+droneStreaming.on('message', (message) => {
+    console.log(message);
+})
+
 function parseState(state) {
     return state
         .split(';')
@@ -42,6 +46,7 @@ function handleError(err) {
 }
 
 drone.send('command', 0, 'command'.length, PORT, HOST, handleError);
+drone.send('streamon', 0, 'command'.length, PORT, HOST, handleError);
 
 io.on('connection', socket => {
     socket.on('command', command => {
@@ -61,12 +66,12 @@ droneState.on(
 );
 
 droneStreaming.on(
-    'stream', state => {
-        debugger;
-        drone.send('streamon', 0, command.length, PORT, HOST, handleError);
-        io.sockets.emit('droneStream', state);
-    }
-)
+    'stream',
+    throttle(stream => {
+        console.log(stream);
+        io.sockets.emit('dronestream', stream);
+    }, 100)
+);
 
 http.listen(6767, () => {
     console.log('Socket io server up and running');

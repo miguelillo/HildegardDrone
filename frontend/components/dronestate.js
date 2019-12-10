@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Battery from './battery';
+import Camera from './camera';
 import FlightData from './flightdata';
 import socket from '../socket';
 import styled from 'styled-components';
@@ -21,6 +22,18 @@ function useSocket() {
   }, []);
   return status;
 }
+
+function useDroneStreaming() {
+  const [droneStreaming, updateDroneState] = useState({});
+  debugger;
+  useEffect(() => {
+    socket.on('dronestream', updateDroneState);
+    return () => socket.removeListener('dronestream');
+  }, []);
+  return droneStreaming;
+}
+
+
 const DroneStateStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -32,13 +45,17 @@ const DroneStateStyles = styled.div`
 `;
 
 const DroneState = () => {
+  debugger;
   const status = useSocket();
   const droneState = useDroneState([]);
+  const droneStreaming = useDroneStreaming();
+
   return (
     <DroneStateStyles>
       <p className="status">Status: {status}</p>
       <Battery battery={droneState.bat} />
-      <FlightData speed={droneState.yaw}/>
+      <FlightData speed={droneState.yaw} />
+      <Camera image={droneStreaming} />
     </DroneStateStyles>
   );
 };
